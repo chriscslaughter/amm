@@ -56,7 +56,9 @@ In the first paragraph of their seminal 2008 paper, Avellaneda \& Stoikov noted 
 Traditionally, this role has been filled by market maker or specialist firms. In recent years, with the growth of electronic exchanges such as Nasdaq’s Inet, anyone willing to submit limit orders in the system can effectively play the role of a dealer. Indeed, the availability of high frequency data on the limit order book (see www.inetats.com) ensures a fair playing field where various agents can post limit orders at the prices they choose.
 \end{quote}
 
-While in principle, anyone may play the role of market maker in a market, various limitations prevent this in practice. US securities law limits who may make the market based on accreditation rules, brokerage licensing requirements, and other considerations. In commodities markets including cryptocurrency spot markets, the high technical complexity of market making 24/7 as well as fee discounts offered to incumbents create competitive barriers to entry for retail participants. While the barriers to entry for automated market making remain high, automation technology has made other active strategies such as market-weighted rebalancing and tax-loss harvesting widely avaiable to retail customers in products such as Wealthfront and Betterment \cite{wealthfront, betterment}. In using automation to provide retail access to active strategies, particular attention must be paid to both \emph{algorithm design} and \emph{interface design}, so that the end user does not adversely select a non-competitive policy configuration. Our objective is to devise an automated strategy for continuous market making that considers the traditional utility objectives of market making, as well as the usability objectives of making market making broadly available to retail users for the first time. In total, the considerations include:
+While in principle, anyone may play the role of market maker in a market, various limitations prevent this in practice. US securities law limits who may make the market based on accreditation rules, brokerage licensing requirements, and other considerations. In commodities markets including cryptocurrency spot markets, the high technical complexity of market making 24/7 as well as fee discounts offered to incumbents create competitive barriers to entry for retail participants. While the barriers to entry for automated market making remain high, automation technology has made other active strategies such as market-weighted rebalancing and tax-loss harvesting widely avaiable to retail customers in products such as Wealthfront and Betterment \cite{wealthfront, betterment}.
+
+In using automation to provide retail access to active strategies, particular attention must be paid to both \emph{algorithm design} and \emph{interface design}. Making investment decisions is proven to be complex. Monti, Martignon, Gigerenzer, and Berg studied high-stakes financial decisions made by bank customers and found that investors cling to the information available to them, ignoring more complex variables which are often assumed in economic models \cite{monti2009impact}. To prevent the end user from adversely selecting a non-competitive policy configuration, we call for making the policy configuration human readable and educating investors on the underlying dynamics of their decisions. Our objective is to devise an automated strategy for continuous market making that considers the traditional utility objectives of market making, as well as the usability objectives of making market making broadly available to retail users for the first time. In total, the considerations include:
 
 \begin{itemize}
   \item The spread charged
@@ -143,12 +145,17 @@ Olivier Guéant, Charles-Albert Lehalle, and Joaquin Fernandez Tapia.
 \bibitem{bouchard2002statistical}
 J.-P. Bouchaud, M. Mezard, and M. Potters.
 \newblock Statistical properties of stock order books: empirical results and models.
-\newblock In {\em     arXiv:cond-mat/0203511v2}, 2002.
+\newblock In {\em arXiv:cond-mat/0203511v2}, 2002.
 
 \bibitem{fushimi2018optimal}
 Takahiro Fushimi, Christian González Rojas, and Molly Herman.
 \newblock Optimal High-Frequency Market Making.
 \newblock 2018.
+
+\bibitem{monti2009impact}
+Marco Monti, Laura Martignon, Gerd Gigerenzer, and Nathan Berg.
+\newblock The impact of simplicity on financial decision-making.
+\newblock In {\em Taatgen, Niels; Van Rijn, Hedderik;: Proceedings of the 31st Annual Conference of the Cognitive Science Society}, pages 1846--1851. Cognitive Science Society, 2009.
 
 \bibitem{wealthfront}
 Wealthfront: Financial Planning and Robo-Investing for Millennials.
