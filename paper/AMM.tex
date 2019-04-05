@@ -30,7 +30,7 @@
 
 \begin{abstract}
 
-The role of a market maker is to provide liquidity on an exchange by quoting bid and ask prices for a small discount or premium to the market price. Automated market making is an active strategy that continuously makes the market in one or more assets. Automated market making has been extensively studied, and an optimal market making algorithm has been proposed by Avellaneda \& Stoikov (2008). In this paper, we review the state of the art in optimal market making, and then propose a simplified market making model that relies on only two parameters: spread and discount. We also demonstrate the performance of the model in simulations.
+The role of a market maker is to provide liquidity on an exchange by quoting bid and ask prices for a small discount or premium to the market price. Automated market making is an active strategy that continuously makes the market in one or more assets. Automated market making has been extensively studied, and an optimal market making algorithm has been proposed by Avellaneda \& Stoikov (2008). In this paper, we review the state of the art in optimal market making, and then propose a simplified market making model that relies on only two parameters: spread and give. We also demonstrate the performance of the model in simulations.
 
 \end{abstract}
 
@@ -69,7 +69,7 @@ In using automation to provide retail access to active strategies, particular at
   \item Intuitive policy configuration
 \end{itemize}
 
-In Section \ref{sec:optimal} we review the state of the art algorithms for optimal market making. In Section \ref{sec:retail} we propose an algorithm that mimics the structure of optimal market making, while simplifying parameterization of the algorithm to promote optimal policy configuration. In Section \ref{sec:experiments} we demonstrate the performance of this algorithm in simulation.
+In Section \ref{sec:optimal} we review the state of the art algorithms for optimal market making. In Section \ref{sec:retail} we propose an algorithm that reflects the structure of optimal market making, while simplifying parameterization of the algorithm to promote optimal policy configuration. In Section \ref{sec:experiments} we demonstrate the performance of this algorithm in simulation.
 
 \section{Optimal Market Making}
 \label{sec:optimal}
@@ -105,11 +105,37 @@ where $A$ and $K$ are positive constants characterizing the liquidity of the ass
 dX_t = ( S_t + \delta^a_t ) dN^a_t - ( S_t - \delta^a_t ) dN^b_t
 \end{equation}
 
+A notable contribution of Guéant, Lehalle, \& Tapia is the introduction of an inventory bound $Q$. The inventory held by the agent, $q_t$, which is signed in the standard model, is bounded in the interval $|q_t| < Q$. Put differently, the agent may never hold more than $Q$ asset, and the agent may never go net short $Q$. While this constraint imposes a realistic risk limit, it does not lead immediately to a risk-based \emph{inventory policy}. For example, the standard model does not model the agent's starting inventory. We address these practical limitations in Section \ref{sec:retail}.
+
+The standard model culminates in the proposal of a utility function which is maximized by the optimal control policy $(\delta^b_t, \delta^a_t)_t$. The utility function and control policy are given by:
+
+\begin{equation}
+\label{eq:utility}
+\max_{(\delta^b_t, \delta^a_t)_t \in \mathcal{A}} \mathop{\mathbb{E}} [ - \exp(-\gamma(X_T + q_T S_T)) ]
+\end{equation}
+
+where $T$ is the terminal time, $\mathcal{A}$ is the set of predictable policies and $\gamma$ is the agent's risk aversion coefficient. Note that $X_T + q_T S_T$ is the value of the portfolio at time $T$, which is directly proportional to agent P\&L, and that $f(x) = \exp(-\gamma x)$ is monotonic in $x$. As a result, the stochastic optimal control objective can be seen as related to maximizing agent P\&L.
+
+The canonical solution to this problem, provided by Avellaneda \& Stoikov, is given by the following quoting policy:
+
+\begin{equation}
+\label{eq:avellanedastoikov1}
+r_t(s) = s - q \gamma \sigma^2(T - t)
+\end{equation}
+
+\begin{equation}
+\label{eq:avellanedastoikov2}
+\delta^a_t + \delta^b_t = \gamma \sigma^2(T - t) + \frac{2}{\gamma}(1 + \frac{\gamma}{k})
+\end{equation}
+
+Here, $r_t(s)$ is the reservation price of the agent, and $\delta^a_t + \delta^b_t$ is the spread. We can make several intuitive observations about the optimal policy. The reservation price is the market reference price, adjusted by a give of $q \gamma \sigma^2(T - t)$. We refer to this as a give because it manifests as a discount to the ask quote when the agent is overweight and a premium to the bid quote when the agent is overweight, both of which give advantage to the taker relative to the reference price $s$. The give is linear in inventory $q$, proportional to volatility $\sigma^2$, and straightlines to zero as the trading interval elapses. The spread $\delta^a_t + \delta^b_t$ follows a similar formula, but does not rely on inventory, and straightlines to the constant $\frac{2}{\gamma}(1 + \frac{\gamma}{k})$ as the trading interval elapses. 
+
+In summary, the optimal control policy charges a spread independent of inventory against a price adjusted to manage inventory. In the next section we simplify the structure of these equations to arrive at a policy in terms of spread and give.
+
 \section{Retail Market Making}
 \label{sec:retail}
 
-\lipsum[1]
-\lipsum[2]
+In this section, we propose a policy for market making that reflects the dynamics of the policies discussed in Section \ref{sec:optimal}, but that is also formulated to be easily configured by a casual user. Designing simple-to-use configuration interfaces for automated strategies mitigates adverse selection risk and maintains efficient market operation in a market where potentially most agents operate identical policies (up to configuration).
 
 \section{Experiments}
 \label{sec:experiments}
@@ -161,7 +187,7 @@ Marco Monti, Laura Martignon, Gerd Gigerenzer, and Nathan Berg.
 Wealthfront: Financial Planning and Robo-Investing for Millennials.
 \newblock \emph{https://www.wealthfront.com/}
 
-\bibitem{wealthfront}
+\bibitem{betterment}
 Betterment.
 \newblock \emph{https://www.betterment.com/}
 
