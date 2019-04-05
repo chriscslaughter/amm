@@ -9,6 +9,15 @@ __pycache__/
 # EMACS (bless)
 *~
 
+# Mac
+.DS_Store
+
+# LaTeX
+paper/*.aux
+paper/*.log
+paper/*.out
+paper/*.synctex.gz
+
 # Distribution / packaging
 .Python
 build/
