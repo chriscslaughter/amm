@@ -13,6 +13,7 @@
 \usepackage{microtype}      % microtypography
 \usepackage{lipsum}
 \usepackage{etoolbox}
+\usepackage{amsmath}
 
 \title{Automated Market Making}
 
@@ -33,9 +34,7 @@ The role of a market maker is to provide liquidity on an exchange by quoting bid
 
 \end{abstract}
 
-
 \keywords{Exchange \and Liquidity \and Automated Market Making}
-
 
 \section{Introduction}
 \label{sec:intro}
@@ -49,7 +48,7 @@ Market makers create liquidity on a market by quoting bid and ask prices for a t
 	\item Opportunity cost of holding inventory
 \end{itemize}
 
-While profitable market making is a complex and multidimensional problem, it has also been extensively studied in the literature, particularly in two seminal papers. Ho \& Stoll studied the problem of dealing under competition and found that the bid and ask quotes are related to the reservation (or indifference) price of the dealer \cite{ho1980on}. Then Avellaneda \& Stoikov proposed a model combining the utility formulation of Ho \& Stoll with statistical modeling of the microstructure of a limit order market, and solved optimal market pricing under this model \cite{avellaneda2008high}. The solution of Avellaneda \& Stoikov is notable because it demonstrates a stochastic optimal control policy under a reasonable stochastic model for order arrivals \cite{bouchard2002statistical}. Subsequent work by Guéant, Lehalle, and Tapia extended this solution to consider management of a finite inventory of cash and asset \cite{guéant2012dealing}. In Section \ref{sec:optimal}, we review the state of the art algorithms for market making to provide context for our algorithm.
+While profitable market making is a complex and multidimensional problem, it has also been extensively studied in the literature, particularly in two seminal papers. Ho \& Stoll studied the problem of dealing under competition and found that the bid and ask quotes are related to the reservation (or indifference) price of the dealer \cite{ho1980on}. Then Avellaneda \& Stoikov proposed a model combining the utility formulation of Ho \& Stoll with statistical modeling of the microstructure of a limit order market, and solved optimal market pricing under this model \cite{avellaneda2008high}. The solution of Avellaneda \& Stoikov is notable because it demonstrates a stochastic optimal control policy under a reasonable stochastic model for order arrivals \cite{bouchard2002statistical}. Subsequent work by Guéant, Lehalle, \& Tapia extended this solution to consider management of a finite inventory of cash and asset \cite{guéant2012dealing}. In Section \ref{sec:optimal}, we review the state of the art algorithms for market making to provide context for our algorithm.
 
 In the first paragraph of their seminal 2008 paper, Avellaneda \& Stoikov noted of market making:
 
@@ -57,7 +56,7 @@ In the first paragraph of their seminal 2008 paper, Avellaneda \& Stoikov noted 
 Traditionally, this role has been filled by market maker or specialist firms. In recent years, with the growth of electronic exchanges such as Nasdaq’s Inet, anyone willing to submit limit orders in the system can effectively play the role of a dealer. Indeed, the availability of high frequency data on the limit order book (see www.inetats.com) ensures a fair playing field where various agents can post limit orders at the prices they choose.
 \end{quote}
 
-While in principle, anyone may play the role of market maker in a market, various limitations prevent this in practice. US securities law limits who may make the market based on accreditation rules, brokerage licensing requirements, and other considerations. In commodities markets including cryptocurrency spot markets, the high technical complexity of market making 24/7 as well as fee discounts offered to incumbents create competitive barriers to entry for retail participants. While the barriers to entry for automated market making remain high, automation technology has made other active strategies such as market-weighted rebalancing and tax-loss harvesting widely avaiable to retail customers in products such as Wealthfront and Betterment. In using automation to provide retail access to active strategies, particular attention must be paid to both \emph{algorithm design} and \emph{interface design}, so that the end user does not adversely select a non-competitive strategy configuration. Our objective is to devise an automated strategy for continuous market making that considers the traditional utility objectives of market making, as well as the usability objectives of making market making broadly available to retail users for the first time. In total, the considerations include:
+While in principle, anyone may play the role of market maker in a market, various limitations prevent this in practice. US securities law limits who may make the market based on accreditation rules, brokerage licensing requirements, and other considerations. In commodities markets including cryptocurrency spot markets, the high technical complexity of market making 24/7 as well as fee discounts offered to incumbents create competitive barriers to entry for retail participants. While the barriers to entry for automated market making remain high, automation technology has made other active strategies such as market-weighted rebalancing and tax-loss harvesting widely avaiable to retail customers in products such as Wealthfront and Betterment. In using automation to provide retail access to active strategies, particular attention must be paid to both \emph{algorithm design} and \emph{interface design}, so that the end user does not adversely select a non-competitive policy configuration. Our objective is to devise an automated strategy for continuous market making that considers the traditional utility objectives of market making, as well as the usability objectives of making market making broadly available to retail users for the first time. In total, the considerations include:
 
 \begin{itemize}
   \item The spread charged
@@ -72,6 +71,33 @@ In Section \ref{sec:optimal} we review the state of the art algorithms for optim
 
 \section{Optimal Market Making}
 \label{sec:optimal}
+
+In this section, we re-summarize the model of Avellaneda \& Stoikov based on the notation and summary of Guéant, Lehalle, \& Tapia. We refer to this model herein as the \emph{standard model}.
+
+In the standard model, the market price, which may be the market mid-price or a reference quote, moves as arithmetic Brownian motion:
+
+\begin{equation}
+\label{eq:brownian}
+dS_{t} = \sigma dW_{t}
+\end{equation}
+
+Guéant, Lehalle, \& Tapia note in a footnote that Equation \ref{eq:brownian} is almost equivalent to the standard Black-Scholes model on a short time horizon, i.e. in a narrow time window the price is exclusively affected by random, drift-free arrival of the arrival of order matches on the limit order market. The market making agent continuously quotes bid and ask prices, $S^b_t$ and $S^a_t$ respectively, and will therefore buy and sell shares of the asset based on the random arrival of orders matched at the quoted prices. In the standard model, the agent holds accumulative inventory $q_t$ given by:
+
+\begin{equation}
+\label{eq:inventory}
+q_{t} = N^b_{t} - N^a_{t}
+\end{equation}
+
+where $N^b_{t}$ and $N^a_{t}$ are the point processes representing the number of asset bought bought or sold respectively as order matches arrive at the quoted prices. The standard model assumes that the intensity of arrival of order matches decreases monotonically in the spread offered on the quoted price. Assuming a bid spread of $\delta^b_t = S_t - S^b_t$ and an ask spread of $\delta^a_t = S^a_t - S_t$, the intensity of arrivals for bids and asks, $\lambda^b$ and $\lambda^a$ respectively, are given by:
+
+
+\begin{equation}
+\label{eq:arrival}
+\lambda^b = A \exp^{-k \delta^b_t}, \quad
+\lambda^a = A \exp^{-k \delta^a_t}
+\end{equation}
+
+where 
 
 \section{Retail Market Making}
 \label{sec:retail}
