@@ -56,7 +56,7 @@ In the first paragraph of their seminal 2008 paper, Avellaneda \& Stoikov noted 
 Traditionally, this role has been filled by market maker or specialist firms. In recent years, with the growth of electronic exchanges such as Nasdaq’s Inet, anyone willing to submit limit orders in the system can effectively play the role of a dealer. Indeed, the availability of high frequency data on the limit order book (see www.inetats.com) ensures a fair playing field where various agents can post limit orders at the prices they choose.
 \end{quote}
 
-While in principle, anyone may play the role of market maker in a market, various limitations prevent this in practice. US securities law limits who may make the market based on accreditation rules, brokerage licensing requirements, and other considerations. In commodities markets including cryptocurrency spot markets, the high technical complexity of market making 24/7 as well as fee discounts offered to incumbents create competitive barriers to entry for retail participants. While the barriers to entry for automated market making remain high, automation technology has made other active strategies such as market-weighted rebalancing and tax-loss harvesting widely avaiable to retail customers in products such as Wealthfront and Betterment. In using automation to provide retail access to active strategies, particular attention must be paid to both \emph{algorithm design} and \emph{interface design}, so that the end user does not adversely select a non-competitive policy configuration. Our objective is to devise an automated strategy for continuous market making that considers the traditional utility objectives of market making, as well as the usability objectives of making market making broadly available to retail users for the first time. In total, the considerations include:
+While in principle, anyone may play the role of market maker in a market, various limitations prevent this in practice. US securities law limits who may make the market based on accreditation rules, brokerage licensing requirements, and other considerations. In commodities markets including cryptocurrency spot markets, the high technical complexity of market making 24/7 as well as fee discounts offered to incumbents create competitive barriers to entry for retail participants. While the barriers to entry for automated market making remain high, automation technology has made other active strategies such as market-weighted rebalancing and tax-loss harvesting widely avaiable to retail customers in products such as Wealthfront and Betterment \cite{wealthfront, betterment}. In using automation to provide retail access to active strategies, particular attention must be paid to both \emph{algorithm design} and \emph{interface design}, so that the end user does not adversely select a non-competitive policy configuration. Our objective is to devise an automated strategy for continuous market making that considers the traditional utility objectives of market making, as well as the usability objectives of making market making broadly available to retail users for the first time. In total, the considerations include:
 
 \begin{itemize}
   \item The spread charged
@@ -90,106 +90,37 @@ q_{t} = N^b_{t} - N^a_{t}
 
 where $N^b_{t}$ and $N^a_{t}$ are the point processes representing the number of asset bought bought or sold respectively as order matches arrive at the quoted prices. The standard model assumes that the intensity of arrival of order matches decreases monotonically in the spread offered on the quoted price. Assuming a bid spread of $\delta^b_t = S_t - S^b_t$ and an ask spread of $\delta^a_t = S^a_t - S_t$, the intensity of arrivals for bids and asks, $\lambda^b$ and $\lambda^a$ respectively, are given by:
 
-
 \begin{equation}
 \label{eq:arrival}
 \lambda^b = A \exp^{-k \delta^b_t}, \quad
 \lambda^a = A \exp^{-k \delta^a_t}
 \end{equation}
 
-where 
+where $A$ and $K$ are positive constants characterizing the liquidity of the asset. Modeling the arrival of order matches permits the agent's net cash holdings to be characterized as well by:
+
+\begin{equation}
+\label{eq:cash}
+dX_t = ( S_t + \delta^a_t ) dN^a_t - ( S_t - \delta^a_t ) dN^b_t
+\end{equation}
 
 \section{Retail Market Making}
 \label{sec:retail}
 
+\lipsum[1]
+\lipsum[2]
+
 \section{Experiments}
 \label{sec:experiments}
+
+\lipsum[3]
+\lipsum[4]
 
 \section{Conclusion}
 \label{sec:conclusion}
 
-\lipsum[4] See Section \ref{sec:headings}.
-
-\subsection{Headings: second level}
 \lipsum[5]
-\begin{equation}
-\xi _{ij}(t)=P(x_{t}=i,x_{t+1}=j|y,v,w;\theta)= {\frac {\alpha _{i}(t)a^{w_t}_{ij}\beta _{j}(t+1)b^{v_{t+1}}_{j}(y_{t+1})}{\sum _{i=1}^{N} \sum _{j=1}^{N} \alpha _{i}(t)a^{w_t}_{ij}\beta _{j}(t+1)b^{v_{t+1}}_{j}(y_{t+1})}}
-\end{equation}
-
-\subsubsection{Headings: third level}
-\lipsum[6]
-
-\paragraph{Paragraph}
-\lipsum[7]
-
-\section{Examples of citations, figures, tables, references}
-\label{sec:others}
-\lipsum[8] \cite{kour2014real,kour2014fast} and see \cite{hadash2018estimate}.
-
-The documentation for \verb+natbib+ may be found at
-\begin{center}
-  \url{http://mirrors.ctan.org/macros/latex/contrib/natbib/natnotes.pdf}
-\end{center}
-Of note is the command \verb+\citet+, which produces citations
-appropriate for use in inline text.  For example,
-\begin{verbatim}
-   \citet{hasselmo} investigated\dots
-\end{verbatim}
-produces
-\begin{quote}
-  Hasselmo, et al.\ (1995) investigated\dots
-\end{quote}
-
-\begin{center}
-  \url{https://www.ctan.org/pkg/booktabs}
-\end{center}
-
-
-\subsection{Figures}
-\lipsum[10] 
-See Figure \ref{fig:fig1}. Here is how you add footnotes. \footnote{Sample of the first footnote.}
-\lipsum[11] 
-
-\begin{figure}
-  \centering
-  \fbox{\rule[-.5cm]{4cm}{4cm} \rule[-.5cm]{4cm}{0cm}}
-  \caption{Sample figure caption.}
-  \label{fig:fig1}
-\end{figure}
-
-\subsection{Tables}
-\lipsum[12]
-See awesome Table~\ref{tab:table}.
-
-\begin{table}
- \caption{Sample table title}
-  \centering
-  \begin{tabular}{lll}
-    \toprule
-    \multicolumn{2}{c}{Part}                   \\
-    \cmidrule(r){1-2}
-    Name     & Description     & Size ($\mu$m) \\
-    \midrule
-    Dendrite & Input terminal  & $\sim$100     \\
-    Axon     & Output terminal & $\sim$10      \\
-    Soma     & Cell body       & up to $10^6$  \\
-    \bottomrule
-  \end{tabular}
-  \label{tab:table}
-\end{table}
-
-\subsection{Lists}
-\begin{itemize}
-\item Lorem ipsum dolor sit amet
-\item consectetur adipiscing elit. 
-\item Aliquam dignissim blandit est, in dictum tortor gravida eget. In ac rutrum magna.
-\end{itemize}
-
 
 \bibliographystyle{unsrt}  
-%\bibliography{references}  %%% Remove comment to use the external .bib file (using bibtex).
-%%% and comment out the ``thebibliography'' section.
-
 
 %%% Comment out this section when you \bibliography{references} is enabled.
 \begin{thebibliography}{1}
@@ -220,14 +151,12 @@ Takahiro Fushimi, Christian González Rojas, and Molly Herman.
 \newblock 2018.
 
 \bibitem{wealthfront}
-@online{Wealthfront: Financial Planning and Robo-Investing for Millennials,
-url = {\url{https://www.wealthfront.com/}}
-}
+Wealthfront: Financial Planning and Robo-Investing for Millennials.
+\newblock \emph{https://www.wealthfront.com/}
 
-\bibitem{betterment}
-@online{Betterment,
-url = {\url{https://www.betterment.com/}}
-}
+\bibitem{wealthfront}
+Betterment.
+\newblock \emph{https://www.betterment.com/}
 
 \end{thebibliography}
 
