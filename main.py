@@ -17,6 +17,15 @@ Delta = 0.5
 Give = 0.5
 
 def simulate():
+	s = s0 + np.cumsum(sigma * np.random.standard_normal((Sim, M)), axis=1)
+	f1 = plt.figure(figsize=(12, 8))
+	ax1 = f1.add_subplot(111)
+	ax1.plot(s[0])
+	plt.ylabel('Price', fontsize=16, labelpad=16)
+	plt.xlabel('Steps', fontsize=16, labelpad=16)
+	plt.margins(x=0)
+	plt.savefig('test', dpi=300, orientation='landscape')
+	plt.show()
 	s = -1
 	while np.min(s) < 0:
 		s = s0 + np.cumsum(sigma * np.random.standard_normal((M, Sim)), axis=0)
