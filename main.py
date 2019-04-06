@@ -36,7 +36,14 @@ def simulate():
 	end = x[-1, :] + np.multiply(s[-1, :], q[-1, :])
 	pnl = end - start
 	roi = 100.0 * np.divide(pnl, start)
-	# charts
+	# chart: brownian market movements
+
+	# chart: agent P&L's
+
+	# chart: the orders placed by our agent
+
+	# chart: the inventory managed by a specific agent
+
 
 def main():
     simulate()
