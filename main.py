@@ -6,7 +6,7 @@ import random
 ## simulation
 s0 = 100.0		# initial price
 x0 = 10000.0	# starting cash value
-sigma = 0.01		# variance
+sigma = 0.01	# variance
 M = 4000		# steps
 Sim = 1000		# number of simulations
 A = 0.5			# arrival intensity (lambda)
