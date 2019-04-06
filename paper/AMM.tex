@@ -190,7 +190,11 @@ While the policy reflects inverse linear control of reservation price like the o
 \section{Experiments}
 \label{sec:experiments}
 
-There have been numerous recent numerical reproductions of the results of Avellaneda \& Stoikov \cite{fushimi2018optimal} as well as commercial deployments of the algorithm. In this Section, we simulate our algorithm 
+There have been numerous recent numerical reproductions of the results of Avellaneda \& Stoikov \cite{fushimi2018optimal} as well as commercial deployments of the algorithm. In this Section, we simulate our algorithm for a single parameterization of market dynamics. This is not intended to serve as an exhaustive numerical study of the algorithm but rather as a pathfinder for further experimentation and optimization. The source code has been made public at https://github.com/chriscslaughter/amm.
+
+We modeled market dynamics for $M=4000$ time steps across $Sim = 100$ simulations. We modeled the agent's holdings as starting at \$4,000 in cash and \$4,000 in shares, each priced at \$100 / share. The market evolved according to Brownian dynamics using $\sigma = 0.05$, or 5 cents per time step average. We modeled $A = 0.5$ and $k = 1.5$.
+
+We configured our agent to trade with spread $\Delta = 0.1$ and give $G = 0.5$. The agent achieved an average ROI of 4\%, with almost every agent achieving an ROI of some kind. Figure \ref{fig:ex1} breaks down the simulations in detail. We found that the agent produced a profit consistently in a variety of market conditions while maintaining sufficient inventory for exposure to matches on both market sides.
 
 \begin{figure*}
     \centering
