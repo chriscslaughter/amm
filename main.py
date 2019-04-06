@@ -6,7 +6,7 @@ import random
 ## simulation
 s0 = 100.0		# initial price
 x0 = 10000.0	# starting cash value
-sigma = 0.01	# variance
+sigma = 0.05	# variance
 M = 4000		# steps
 Sim = 1000		# number of simulations
 A = 0.5			# arrival intensity (lambda)
@@ -45,7 +45,7 @@ def simulate():
 	end = x[-1, :] + np.multiply(s[-1, :], q[-1, :])
 	pnl = end - start
 	roi = 100.0 * np.divide(pnl, start)
-	print(np.min(roi), np.mean(roi), np.max(roi))
+	# charts
 
 def main():
     simulate()
