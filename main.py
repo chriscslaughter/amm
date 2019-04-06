@@ -16,13 +16,6 @@ k = 1.5			# arrival intensity (lambda)
 Delta = 0.5
 Give = 0.5
 
-"""
-f1 = plt.figure(figsize=(10, 8))
-ax1 = f1.add_subplot(111)
-ax1.plot(s[0])
-plt.show()
-"""
-
 def simulate():
 	s = -1
 	while np.min(s) < 0:
