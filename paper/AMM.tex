@@ -137,16 +137,55 @@ In summary, the optimal control policy charges a spread independent of inventory
 
 In this section, we propose a policy for market making that reflects the dynamics of the policies discussed in Section \ref{sec:optimal}, but that is also formulated to be easily configured by a casual user. Designing simple-to-use configuration interfaces for automated strategies mitigates adverse selection risk and maintains efficient market operation in a market where potentially most agents operate identical policies (up to configuration).
 
+Our policy replaces the spread Equation \ref{eq:avellanedastoikov2} with a user specified spread $\Delta$, resulting in the overall spread:
+
+\begin{equation}
+\label{eq:retailspread}
+\delta^a_t + \delta^b_t = 2 \Delta
+\end{equation}
+
+We believe a user's selection of $\Delta$ encapsulates their thinking about arrival rate $k$ and risk coefficient $\gamma$ without requiring education on either auxiliary variable. For example, a user will choose a lower spread to encourage faster order arrivals. The spread is clearly no longer a linear form, or even a function of, volatility $\sigma$. We believe this is justified because the user thesis on market volatility is also captured by their selection of spread, since overwide spreads will not experience order arrivals. By wholely substituting spread with a user-specified quantity, our algorithm does not impose an automatic policy for spreads but rather requires the user to configure spread \emph{as policy}. We believe this decision is justified since any marginal decision to expand the complexity of Equation \ref{eq:retailspread} introduces advanced market concepts to the interface, while eroding understanding of what net spread the agent charges the market for its services.
+
+Our policy restates the user reservation price in terms of \emph{reference price} and \emph{give}. To arrive there constructively, recall the formulation of reservation price from Section \ref{sec:optimal}, $r_t(s) = s - q \gamma \sigma^2(T - t)$. By performing the change of variables $q \mapsto q/Q = q'$, we arrive at the alternative formulation:
+
+\begin{equation}
+\label{eq:retailprice}
+r_t(s) = s - q' Q \gamma \sigma^2(T - t) = s - q' G'
+\end{equation}
+
+We recall the inventory risk constraint $|q| < Q$ and note that if it was enforced by the agent, then $|q'| < 1$ achieving the limits $q = -1$ when the agent is totally underweight the asset and $q = 1$ when the agent is totally overweight the asset. Therefore $G'$ may be interpreted as the maximum give on price the agent will provide to rebalance inventory. Performing the additional change of variables $G' \mapsto G'/s = G$, the equation can be written as:
+
+\begin{equation}
+\label{eq:retailpricepercentage}
+r_t(s) = s - q' G s = s (1 - q' G)
+\end{equation}
+
+Here, $G$ is the maximum give as a percentage of asset price. This modification normalizes the specification of give for any market price. We believe the most intuitive experience for the user is to specify the give outright, since the give is a percentage like spread, characterizes the loss in profit offered to rebalance explicitly, and encapsulates user thinking on volatility and risk.
+
+The quote pricing in our policy is then given as:
+
+\begin{equation}
+\label{eq:retailbid}
+s^b_t = s_t (1 - q_t' G) - \Delta
+\end{equation}
+\begin{equation}
+\label{eq:retailask}
+s^a_t = s_t (1 - q_t' G) + \Delta
+\end{equation}
+\begin{equation}
+\label{eq:retailqprime}
+q_t' = \frac{s_t q_t - x_t}{s_t q_t + x_t}
+\end{equation}
+
+This policy quotes a spread that is constant in inventory and a reservation price that is linear in inventory, which we believe to be the most important dynamics of the linear stochastic control policy. However the simplification of the policy configurations as $(\Delta, G)$ reduces the risk of adverse selection of noncompetitive policy configurations.
+
+While the policy reflects inverse linear control of reservation price like the optimal policy, we make no claim that the modified policy is optimal in any sense. We believe that it provides only an engineered compromise between optimal policy, ease of configuration, and practical considerations such as finite, non-negative inventory.
+
 \section{Experiments}
 \label{sec:experiments}
 
-\lipsum[3]
-\lipsum[4]
-
 \section{Conclusion}
 \label{sec:conclusion}
-
-\lipsum[5]
 
 \bibliographystyle{unsrt}  
 
