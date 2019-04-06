@@ -14,6 +14,12 @@
 \usepackage{lipsum}
 \usepackage{etoolbox}
 \usepackage{amsmath}
+\usepackage{subcaption}
+\usepackage{graphicx}
+
+\graphicspath{{images/}}
+\captionsetup[figure]{labelfont={large},textfont={large}}
+\captionsetup[subfigure]{labelfont={}, textfont={}}
 
 \title{Automated Market Making}
 
@@ -141,7 +147,41 @@ In this section, we propose a policy for market making that reflects the dynamic
 \label{sec:experiments}
 
 \lipsum[3]
-\lipsum[4]
+
+\begin{figure}[t!]
+
+\begin{subfigure}{0.48\textwidth}
+\includegraphics[width=\linewidth]{title.png}
+\caption{First subfigure} \label{fig:a}
+\end{subfigure}\hspace*{\fill}
+\begin{subfigure}{0.48\textwidth}
+\includegraphics[width=\linewidth]{title.png}
+\caption{Second subfigure} \label{fig:b}
+\end{subfigure}
+
+\medskip
+\begin{subfigure}{0.48\textwidth}
+\includegraphics[width=\linewidth]{title.png}
+\caption{Third subfigure} \label{fig:c}
+\end{subfigure}\hspace*{\fill}
+\begin{subfigure}{0.48\textwidth}
+\includegraphics[width=\linewidth]{title.png}
+\caption{Fourth subfigure} \label{fig:d}
+\end{subfigure}
+
+\medskip
+\begin{subfigure}{0.48\textwidth}
+\includegraphics[width=\linewidth]{title.png}
+\caption{Fifth subfigure} \label{fig:e}
+\end{subfigure}\hspace*{\fill}
+\begin{subfigure}{0.48\textwidth}
+\includegraphics[width=\linewidth]{title.png}
+\caption{Sixth subfigure} \label{fig:f}
+\end{subfigure}
+
+\caption{My complicated figure} \label{fig:1}
+\end{figure}
+
 
 \section{Conclusion}
 \label{sec:conclusion}
