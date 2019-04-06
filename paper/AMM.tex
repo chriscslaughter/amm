@@ -192,39 +192,44 @@ While the policy reflects inverse linear control of reservation price like the o
 
 There have been numerous recent numerical reproductions of the results of Avellaneda \& Stoikov \cite{fushimi2018optimal} as well as commercial deployments of the algorithm. In this Section, we simulate our algorithm 
 
-\begin{figure}[t!]
-
-\begin{subfigure}{0.49\textwidth}
-\includegraphics[width=\linewidth]{test.png}
-\caption{First subfigure} \label{fig:a}
-\end{subfigure}\hspace*{\fill}
-\begin{subfigure}{0.5\textwidth}
-\includegraphics[width=\linewidth]{test.png}
-\caption{Second subfigure} \label{fig:b}
-\end{subfigure}
-
-\medskip
-\begin{subfigure}{0.49\textwidth}
-\includegraphics[width=\linewidth]{test.png}
-\caption{Third subfigure} \label{fig:c}
-\end{subfigure}\hspace*{\fill}
-\begin{subfigure}{0.5\textwidth}
-\includegraphics[width=\linewidth]{test.png}
-\caption{Fourth subfigure} \label{fig:d}
-\end{subfigure}
-
-\medskip
-\begin{subfigure}{0.49\textwidth}
-\includegraphics[width=\linewidth]{test.png}
-\caption{Fifth subfigure} \label{fig:e}
-\end{subfigure}\hspace*{\fill}
-\begin{subfigure}{0.49\textwidth}
-\includegraphics[width=\linewidth]{test.png}
-\caption{Sixth subfigure} \label{fig:f}
-\end{subfigure}
-
-\caption{My complicated figure} \label{fig:1}
-\end{figure}
+\begin{figure*}
+    \centering
+    \begin{subfigure}[b]{0.475\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{market_price.png}
+        \caption[Market Price]
+        {{Market Price}}
+        \label{fig:ex1-market_price}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.475\textwidth}  
+        \centering 
+        \includegraphics[width=\textwidth]{roi.png}
+        \caption[Return on Investment (ROI)]
+        {{Return on Investment (ROI)}}    
+        \label{fig:ex1-roi}
+    \end{subfigure}
+    \vskip\baselineskip
+    \begin{subfigure}[b]{0.475\textwidth}   
+        \centering 
+        \includegraphics[width=\textwidth]{orders.png}
+        \caption[Orders Matched]
+        {{Orders Matched}}    
+        \label{fig:ex1-orders}
+    \end{subfigure}
+    \quad
+    \begin{subfigure}[b]{0.475\textwidth}   
+        \centering 
+        \includegraphics[width=\textwidth]{inventory.png}
+        \caption[Inventory Management]
+        {{Inventory Management}}
+        \label{fig:ex1-inventory}
+    \end{subfigure}
+    \caption{
+      Experimental results of numerical simulation for the algorithm proposed in Section \ref{sec:retail}. The algorithm was simulated for a broad range of market evolutions (\subref{fig:ex1-market_price}), while the algorithm achieved an ROI on average (\subref{fig:ex1-roi}). Quotes offered by the agent received consistent bid and ask action (\subref{fig:ex1-orders}), while the agent's give policy maintained inventory balance over time (\subref{fig:ex1-inventory}).
+    }
+    \label{fig:ex1}
+\end{figure*}
 
 \section{Conclusion}
 \label{sec:conclusion}
