@@ -143,11 +143,11 @@ In summary, the optimal control policy charges a spread independent of inventory
 
 In this section, we propose a policy for market making that reflects the dynamics of the policies discussed in Section \ref{sec:optimal}, but that is also formulated to be easily configured by a casual user. Designing simple-to-use configuration interfaces for automated strategies mitigates adverse selection risk and maintains efficient market operation in a market where potentially most agents operate identical policies (up to configuration).
 
-Our policy replaces the spread Equation \ref{eq:avellanedastoikov2} with a user specified spread $\Delta$, resulting in the overall spread:
+Our policy replaces the spread Equation \ref{eq:avellanedastoikov2} with a user specified percentage spread $\Delta$, resulting in the overall spread:
 
 \begin{equation}
 \label{eq:retailspread}
-\delta^a_t + \delta^b_t = 2 \Delta
+\delta^a_t + \delta^b_t = 2 \Delta s
 \end{equation}
 
 We believe a user's selection of $\Delta$ encapsulates their thinking about arrival rate $k$ and risk coefficient $\gamma$ without requiring education on either auxiliary variable. For example, a user will choose a lower spread to encourage faster order arrivals. The spread is clearly no longer a linear form, or even a function of, volatility $\sigma$. We believe this is justified because the user thesis on market volatility is also captured by their selection of spread, since overwide spreads will not experience order arrivals. By wholely substituting spread with a user-specified quantity, our algorithm does not impose an automatic policy for spreads but rather requires the user to configure spread \emph{as policy}. We believe this decision is justified since any marginal decision to expand the complexity of Equation \ref{eq:retailspread} introduces advanced market concepts to the interface, while eroding understanding of what net spread the agent charges the market for its services.
@@ -172,11 +172,11 @@ The quote pricing in our policy is then given as:
 
 \begin{equation}
 \label{eq:retailbid}
-s^b_t = s_t (1 - q_t' G) - \Delta
+s^b_t = s_t (1 - q_t' G - \Delta)
 \end{equation}
 \begin{equation}
 \label{eq:retailask}
-s^a_t = s_t (1 - q_t' G) + \Delta
+s^a_t = s_t (1 - q_t' G + \Delta)
 \end{equation}
 \begin{equation}
 \label{eq:retailqprime}
