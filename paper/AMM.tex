@@ -54,7 +54,7 @@ Market makers create liquidity on a market by quoting bid and ask prices for a t
 	\item Opportunity cost of holding inventory
 \end{itemize}
 
-While profitable market making is a complex and multidimensional problem, it has also been extensively studied in the literature, particularly in two seminal papers. Ho \& Stoll studied the problem of dealing under competition and found that the bid and ask quotes are related to the reservation (or indifference) price of the dealer \cite{ho1980on}. Then Avellaneda \& Stoikov proposed a model combining the utility formulation of Ho \& Stoll with statistical modeling of the microstructure of a limit order market, and solved optimal market pricing under this model \cite{avellaneda2008high}. The solution of Avellaneda \& Stoikov is notable because it demonstrates a stochastic optimal control policy under a reasonable stochastic model for order arrivals \cite{bouchard2002statistical}. Subsequent work by Guéant, Lehalle, \& Tapia extended this solution to consider management of a finite inventory of cash and asset \cite{guéant2012dealing}. In Section \ref{sec:optimal}, we review the state of the art algorithms for market making to provide context for our algorithm.
+While profitable market making is a complex and multidimensional problem, it has also been extensively studied in the literature, particularly in two seminal papers. Ho \& Stoll studied the problem of dealing under competition and found that the bid and ask quotes are related to the reservation, or indifference, price of the dealer \cite{ho1980on}. Then Avellaneda \& Stoikov proposed a model combining the utility formulation of Ho \& Stoll with statistical modeling of the microstructure of a limit order market, and solved optimal market pricing under this model \cite{avellaneda2008high}. The solution of Avellaneda \& Stoikov is notable because it demonstrates a stochastic optimal control policy under a reasonable stochastic model for order arrivals \cite{bouchard2002statistical}. Subsequent work by Guéant, Lehalle, \& Tapia extended this solution to consider management of a finite inventory of cash and asset \cite{guéant2012dealing}. In Section \ref{sec:optimal}, we review the state of the art algorithms for market making to provide context for our algorithm.
 
 In the first paragraph of their seminal 2008 paper, Avellaneda \& Stoikov noted of market making:
 
@@ -64,7 +64,7 @@ Traditionally, this role has been filled by market maker or specialist firms. In
 
 While in principle, anyone may play the role of market maker in a market, various limitations prevent this in practice. US securities law limits who may make the market based on accreditation rules, brokerage licensing requirements, and other considerations. In commodities markets including cryptocurrency spot markets, the high technical complexity of market making 24/7 as well as fee discounts offered to incumbents create competitive barriers to entry for retail participants. While the barriers to entry for automated market making remain high, automation technology has made other active strategies such as market-weighted rebalancing and tax-loss harvesting widely avaiable to retail customers in products such as Wealthfront and Betterment \cite{wealthfront, betterment}.
 
-In using automation to provide retail access to active strategies, particular attention must be paid to both \emph{algorithm design} and \emph{interface design}. Making investment decisions is proven to be complex. Monti, Martignon, Gigerenzer, \& Berg studied high-stakes financial decisions made by bank customers and found that investors cling to the information available to them, ignoring more complex variables which are often assumed in economic models \cite{monti2009impact}. To prevent the end user from adversely selecting a non-competitive policy configuration, we call for making the policy configuration human readable and educating investors on the underlying dynamics of their decisions. Our objective is to devise an automated strategy for continuous market making that considers the traditional utility objectives of market making, as well as the usability objectives of making market making broadly available to retail users for the first time. In total, the considerations include:
+In using automation to provide retail access to active strategies, particular attention must be paid to both \emph{algorithm design} and \emph{interface design}. Making investment decisions is obviously complex. Monti, Martignon, Gigerenzer, \& Berg studied high-stakes financial decisions made by bank customers and found that investors cling to the information available to them, ignoring more complex variables which are often assumed in economic models \cite{monti2009impact}. To prevent the end user from adversely selecting a non-competitive policy configuration, we focus on making the policy configuration human readable and educating investors on the underlying dynamics of their decisions. Our objective is to devise an automated strategy for continuous market making that considers the traditional utility objectives of market making, as well as the usability objectives of broadly offering market making to retail users for the first time. In total, the considerations include:
 
 \begin{itemize}
   \item The spread charged
@@ -104,7 +104,7 @@ where $N^b_{t}$ and $N^a_{t}$ are the point processes representing the number of
 \lambda^a = A \exp^{-k \delta^a_t}
 \end{equation}
 
-where $A$ and $k$ are positive constants characterizing the liquidity of the asset. Modeling the arrival of order matches permits the agent's net cash holdings to be characterized as well by:
+where $A$ and $k$ are positive constants characterizing the liquidity of the asset. Modeling the arrival of order matches leads the agent's net cash holdings to be characterized as:
 
 \begin{equation}
 \label{eq:cash}
@@ -141,7 +141,7 @@ In summary, the optimal control policy charges a spread independent of inventory
 \section{Retail Market Making}
 \label{sec:retail}
 
-In this section, we propose a policy for market making that reflects the dynamics of the policies discussed in Section \ref{sec:optimal}, but that is also formulated to be easily configured by a casual user. Designing simple-to-use configuration interfaces for automated strategies mitigates adverse selection risk and maintains efficient market operation in a market where potentially most agents operate identical policies (up to configuration).
+In this section, we propose a policy for market making that reflects the dynamics of the policies discussed in Section \ref{sec:optimal}, but that is also formulated to be easily configured by a casual user in terms of two parameters: \emph{spread} and \emph{give}. Designing simple-to-use configuration interfaces for automated strategies mitigates adverse selection risk and maintains efficient market operation in a market where potentially most agents operate identical policies (up to configuration).
 
 Our policy replaces the spread Equation \ref{eq:avellanedastoikov2} with a user specified percentage spread $\Delta$, resulting in the overall spread:
 
@@ -152,7 +152,7 @@ Our policy replaces the spread Equation \ref{eq:avellanedastoikov2} with a user 
 
 We believe a user's selection of $\Delta$ encapsulates their thinking about arrival rate $k$ and risk coefficient $\gamma$ without requiring education on either auxiliary variable. For example, a user will choose a lower spread to encourage faster order arrivals. The spread is clearly no longer a linear form, or even a function of, volatility $\sigma$. We believe this is justified because the user thesis on market volatility is also captured by their selection of spread, since overwide spreads will not experience order arrivals. By wholely substituting spread with a user-specified quantity, our algorithm does not impose an automatic policy for spreads but rather requires the user to configure spread \emph{as policy}. We believe this decision is justified since any marginal decision to expand the complexity of Equation \ref{eq:retailspread} introduces advanced market concepts to the interface, while eroding understanding of what net spread the agent charges the market for its services.
 
-Our policy restates the user reservation price in terms of \emph{reference price} and \emph{give}. To arrive there constructively, recall the formulation of reservation price from Section \ref{sec:optimal}, $r_t(s) = s - q \gamma \sigma^2(T - t)$. By performing the change of variables $q \mapsto q/Q = q'$, we arrive at the alternative formulation:
+Recall the formulation of reservation price from Section \ref{sec:optimal}, $r_t(s) = s - q \gamma \sigma^2(T - t)$. By performing the change of variables $q \mapsto q/Q = q'$, we arrive at the alternative formulation:
 
 \begin{equation}
 \label{eq:retailprice}
@@ -166,7 +166,7 @@ We recall the inventory risk constraint $|q| < Q$ and note that if it was enforc
 r_t(s) = s - q' G s = s (1 - q' G)
 \end{equation}
 
-Here, $G$ is the maximum give as a percentage of asset price. This modification normalizes the specification of give for any market price. We believe the most intuitive experience for the user is to specify the give outright, since the give is a percentage like spread, characterizes the loss in profit offered to rebalance explicitly, and encapsulates user thinking on volatility and risk.
+Here, $G$ is the maximum give as a percentage of asset price. This modification normalizes the specification of give for any market price. We believe the most intuitive experience for the user is to specify the give outright, since the give is a percentage-like spread, characterizes the loss in profit offered to rebalance explicitly, and encapsulates user thinking on volatility and risk.
 
 The quote pricing in our policy is then given as:
 
@@ -190,9 +190,9 @@ While the policy reflects inverse linear control of reservation price like the o
 \section{Experiments}
 \label{sec:experiments}
 
-There have been numerous recent numerical reproductions of the results of Avellaneda \& Stoikov \cite{fushimi2018optimal} as well as commercial deployments of the algorithm. In this Section, we simulate our algorithm for a single parameterization of market dynamics. This is not intended to serve as an exhaustive numerical study of the algorithm but rather as a pathfinder for further experimentation and optimization. The source code has been made public at https://github.com/chriscslaughter/amm.
+There have been numerous recent numerical reproductions of the results of Avellaneda \& Stoikov \cite{fushimi2018optimal} as well as commercial deployments of the algorithm. In this Section, we simulate our algorithm for a single parameterization of market dynamics, across hundreds of simulations. This is not intended to serve as an exhaustive numerical study of the algorithm but rather as a pathfinder for further experimentation and optimization. The source code has been made public at https://github.com/chriscslaughter/amm.
 
-We modeled market dynamics for $M=4000$ time steps across $Sim = 100$ simulations. We modeled the agent's holdings as starting at \$4,000 in cash and \$4,000 in shares, each priced at \$100 / share. The market evolved according to Brownian dynamics using $\sigma = 0.05$, or 5 cents per time step average. We modeled $A = 0.5$ and $k = 1.5$.
+We modeled market dynamics for $M=4000$ time steps across $N = 100$ simulations. We modeled the agent's holdings as starting at \$4,000 in cash and \$4,000 in shares, each priced at \$100 / share. The market evolved according to Brownian dynamics using $\sigma = 0.05$, or 5 cents average deviation per time stamp. We modeled $A = 0.5$ and $k = 1.5$.
 
 We configured our agent to trade with spread $\Delta = 0.1$ and give $G = 0.5$. The agent achieved an average ROI of 4\%, with almost every agent achieving an ROI of some kind. Figure \ref{fig:ex1} breaks down the simulations in detail. We found that the agent produced a profit consistently in a variety of market conditions while maintaining sufficient inventory for exposure to matches on both market sides.
 
@@ -230,7 +230,9 @@ We configured our agent to trade with spread $\Delta = 0.1$ and give $G = 0.5$. 
         \label{fig:ex1-inventory}
     \end{subfigure}
     \caption{
-      Experimental results of numerical simulation for the algorithm proposed in Section \ref{sec:retail}. The algorithm was simulated for a broad range of market evolutions (\subref{fig:ex1-market_price}), while the algorithm achieved an ROI on average (\subref{fig:ex1-roi}). Quotes offered by the agent received consistent bid and ask action (\subref{fig:ex1-orders}), while the agent's give policy maintained inventory balance over time (\subref{fig:ex1-inventory}).
+      \small{
+        Experimental results of numerical simulation for the algorithm proposed in Section \ref{sec:retail}. The algorithm was simulated for a broad range of market evolutions (\subref{fig:ex1-market_price}), while the algorithm achieved an ROI on average (\subref{fig:ex1-roi}). Quotes offered by the agent received consistent bid and ask action (\subref{fig:ex1-orders}), while the agent's give policy maintained inventory balance over time (\subref{fig:ex1-inventory}).
+      }
     }
     \label{fig:ex1}
 \end{figure*}
