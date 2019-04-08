@@ -17,7 +17,7 @@ paper/*.aux
 paper/*.log
 paper/*.out
 paper/*.synctex.gz
-*.pdf
+# *.pdf
 
 # Distribution / packaging
 .Python
